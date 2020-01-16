@@ -6,7 +6,11 @@ import store from './store'
 import router from './router'
 import 'view-design/dist/styles/iview.css'
 import './permission'
+import { get, post, uploadFile } from './api/http.js'
 
+Vue.prototype.post = post
+Vue.prototype.get = get
+Vue.prototype.uploadFile = uploadFile
 Vue.config.productionTip = false
 Vue.use(ViewUI)
 

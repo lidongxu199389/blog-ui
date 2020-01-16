@@ -17,6 +17,10 @@
 </template>
 
 <script>
+
+import axios from 'axios'
+import QS from 'qs'
+
 export default {
     name: 'login',
     data() {
@@ -62,23 +66,34 @@ export default {
 
         },
         submit() {
-            if (this.account === 'admin' && this.pwd === 'admin') {
-                this.isShowLoading = true
-                // 登陆成功 设置用户信息
-                localStorage.setItem('userImg', 'https://avatars3.githubusercontent.com/u/22117876?s=460&v=4')
-                localStorage.setItem('userName', '小明')
-                // 登陆成功 假设这里是后台返回的 token
-                localStorage.setItem('token', 'i_am_token')
-                this.$router.push({ path: this.redirect || '/' })
-            } else {
-                if (this.account !== 'admin') {
-                    this.accountError = '账号为admin'
+            let params = { id: '1' }
+            axios.post('http://127.0.0.1:8123/blog/sayHello', QS.stringify(params)).then(res => {
+                const ds = res.data
+                if (ds.resultCode === '1') {
+                    console.log(res.data.result)
                 }
+            }).catch(err => {
+            })
+            // this.post('http://127.0.0.1:8123/blog/sayHello').then(result => {
+            // console.log('____________' + result)
+            // if (result.resultCode === '1') {
+            //     this.isShowLoading = true
+            //     // 登陆成功 设置用户信息
+            //     localStorage.setItem('userImg', 'https://avatars3.githubusercontent.com/u/22117876?s=460&v=4')
+            //     localStorage.setItem('userName', '小明')
+            //     // 登陆成功 假设这里是后台返回的 token
+            //     localStorage.setItem('token', 'i_am_token')
+            //     this.$router.push({ path: this.redirect || '/' })
+            // } else {
+            //     if (this.account !== 'admin') {
+            //         this.accountError = '账号为admin'
+            //     }
 
-                if (this.pwd !== 'admin') {
-                    this.pwdError = '密码为admin'
-                }
-            }
+            //     if (this.pwd !== 'admin') {
+            //         this.pwdError = '密码为admin'
+            //     }
+            // }
+            // })
         },
     },
 }
